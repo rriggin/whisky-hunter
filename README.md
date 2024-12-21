@@ -36,4 +36,12 @@ python distillery_data.py --list        # Show available distilleries
 python distillery_data.py macallan      # Get data for specific distillery
 python distillery_data.py macallan --limit 5  # Show first 5 records
 
+## Examples:
+
+
+https://github.com/user-attachments/assets/874b5fc5-a44f-4cb7-926f-4c3194d86ffc
+
+
+
+
 
