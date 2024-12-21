@@ -63,24 +63,38 @@ def display_available_distilleries():
     else:
         print("Failed to fetch available distilleries")
 
-def display_distillery(data):
+def display_distillery(data, limit=None):
     """
     Display detailed distillery data.
     Args:
-        data: Dictionary containing distillery data
+        data: List or Dictionary containing distillery data
+        limit: Number of records to show (None for all records)
     """
     if not data:
         return
 
     print("\nDistillery Details:")
-    for key, value in data.items():
-        print(f"  {key}: {value}")
+    if isinstance(data, dict):
+        for key, value in data.items():
+            print(f"  {key}: {value}")
+    elif isinstance(data, list):
+        records_to_show = data[:limit] if limit else data
+        print(f"\nShowing {'all' if limit is None else limit} of {len(data)} records:")
+        for i, item in enumerate(records_to_show, 1):
+            print(f"\nRecord {i}:")
+            for key, value in item.items():
+                print(f"  {key}: {value}")
+            print()  # Add blank line between records
+    else:
+        print(f"  Unexpected data type: {type(data)}")
+        print(data)
 
 if __name__ == "__main__":
     # Set up argument parser
     parser = argparse.ArgumentParser(description='Fetch data for a specific distillery from WhiskyHunter API')
     parser.add_argument('slug', nargs='?', help='Distillery identifier (slug)')
     parser.add_argument('--list', action='store_true', help='List available distilleries')
+    parser.add_argument('--limit', type=int, help='Number of records to display (default: all)')
     args = parser.parse_args()
 
     if args.list:
@@ -88,7 +102,7 @@ if __name__ == "__main__":
     elif args.slug:
         data = get_distillery_by_slug(args.slug)
         if data:
-            display_distillery(data)
+            display_distillery(data, limit=args.limit)
         else:
             print(f"Failed to fetch data for distillery: {args.slug}")
     else:
