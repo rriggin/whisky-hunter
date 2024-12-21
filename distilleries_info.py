@@ -15,11 +15,11 @@ load_dotenv()
 
 def get_distilleries_info():
     """
-    Fetches distilleries information from WhiskyHunter API.
+    Fetches list of distillery information from WhiskyHunter API.
     Returns:
-        list: Distilleries information or None if the request fails
+        list: Distillery information or None if the request fails
     """
-    base_url = "https://whiskyhunter.net/api/distilleries_info"  # No trailing slash
+    base_url = "https://whiskyhunter.net/api/distilleries_info"
     username = os.getenv('WHISKY_HUNTER_USERNAME')
     password = os.getenv('WHISKY_HUNTER_PASSWORD')
 
@@ -34,11 +34,11 @@ def get_distilleries_info():
         print(f"Error fetching distilleries info: {e}")
         return None
 
-def display_distilleries_info(data, limit=None):
+def display_distilleries(data, limit=None):
     """
-    Display distilleries information with optional limit.
+    Display distillery records with optional limit.
     Args:
-        data: List of distillery information
+        data: List of distillery records
         limit: Number of records to show (None for all records)
     """
     if not data:
@@ -60,6 +60,6 @@ if __name__ == "__main__":
 
     data = get_distilleries_info()
     if data:
-        display_distilleries_info(data, limit=args.limit)
+        display_distilleries(data, limit=args.limit)
     else:
         print("Failed to fetch distilleries information") 
